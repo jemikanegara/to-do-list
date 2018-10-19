@@ -41,8 +41,8 @@ function readListing() {
     todoList.appendChild(div);
 
     // Event Listener for edit & delete button
-    
-
+    deleteButton.addEventListener('click', deleteListing);
+    editButton.addEventListener('click', editListing)
   }
 }
 
@@ -56,6 +56,11 @@ function addListing() {
 }
 
 // Update
+function editListing () {
+  let div = this.parentNode
+  div.innerHTML = ''
+}
+
 
 // Edit Variable
 editCancel = document.getElementById("editCancel");
@@ -73,8 +78,19 @@ function editSaving() {
 }
 
 // Delete
-
-
+function deleteListing() {
+  let div = this.parentNode
+  console.log(div)
+  let li = div.querySelector('li')
+  console.log(li)
+  for(i=0; i<todos.length; i++){
+    if(li.textContent === todos[i]){
+      todos.splice(i,1)
+    }
+  }
+  todoList.innerHTML = ''
+  readListing()
+}
 
 // Search
 function searchListing(e) {
