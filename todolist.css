@@ -1,0 +1,21 @@
+*{
+    font-family: Helvetica, sans-serif;
+}
+
+@media (min-width: 500px) {
+    .centering{
+        margin: 0 auto;
+    }
+}
+
+.header {
+    background: #3B5998;
+    color: white;
+}
+
+.footer {
+    border-top: 1px solid rgba(0,0,0,.125);
+}
+.btn, .btn-info {
+    display:inline-block;
+}
