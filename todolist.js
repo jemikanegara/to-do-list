@@ -41,8 +41,8 @@ function readListing() {
     todoList.appendChild(div);
 
     // Event Listener for edit & delete button
-    deleteButton.addEventListener('click', deleteListing);
-    editButton.addEventListener('click', editListing)
+    deleteButton.addEventListener("click", deleteListing);
+    editButton.addEventListener("click", editListing);
   }
 }
 
@@ -56,43 +56,57 @@ function addListing() {
 }
 
 // Update
-function editListing () {
-  let div = this.parentNode
-  div.innerHTML = ''
+function editListing() {
+  let div = this.parentNode;
+  div.innerHTML = "";
 }
-
 
 // Edit Variable
-editCancel = document.getElementById("editCancel");
-editInput = document.getElementById("editInput");
-editSave = document.getElementById("editSave");
-// Edit Event Listener
-editCancel.addEventListener("click", editCanceling);
-editSave.addEventListener("click", editSaving);
-function editCanceling() {
-  console.log("edit canceling success");
-}
+// editCancel = document.getElementById("editCancel");
+// editInput = document.getElementById("editInput");
+// editSave = document.getElementById("editSave");
+// // Edit Event Listener
+// editCancel.addEventListener("click", editCanceling);
+// editSave.addEventListener("click", editSaving);
+// function editCanceling() {
+//   console.log("edit canceling success");
+// }
 
-function editSaving() {
-  console.log("edit saving succes");
-}
+// function editSaving() {
+//   console.log("edit saving succes");
+// }
+
+// `<div class="row mb-3 list">
+//  <button type="button" class="btn btn-dark col-xl-1 col-lg-1 col-md-1 col-2" id="editSave">Save</button>
+// <input class="list-group-item col-9" placeholder="Sleep" id="editInput">
+// <button type="button" class="btn btn-warning col-1" id="editCancel">X</button>
+// </div>`
 
 // Delete
 function deleteListing() {
-  let div = this.parentNode
-  console.log(div)
-  let li = div.querySelector('li')
-  console.log(li)
-  for(i=0; i<todos.length; i++){
-    if(li.textContent === todos[i]){
-      todos.splice(i,1)
+  let div = this.parentNode;
+  let li = div.querySelector("li");
+
+  for (i = 0; i < todos.length; i++) {
+    if (li.textContent === todos[i]) {
+      todos.splice(i, 1);
     }
   }
-  todoList.innerHTML = ''
-  readListing()
+  div.remove();
 }
 
 // Search
 function searchListing(e) {
-  console.log("search result : " + e.target.value);
+  let searchValue = e.target.value.toLowerCase();
+  let allDiv = document.querySelectorAll(".list");
+
+  for (i = 0; i < todos.length; i++) {
+    if (todos[i].toLowerCase().includes(searchValue)) {
+      console.log(`result = ${todos[i]}`);
+      allDiv[i].style.display = "flex";
+    } else {
+      allDiv[i].style.display = "none";
+      console.log(`hide = ${todos[i]}`);
+    }
+  }
 }
