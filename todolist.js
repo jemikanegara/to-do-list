@@ -88,8 +88,13 @@ function editListing() {
   function editSaving() {
     let input = div.children[1];
     let value = input.value; // Get input value
-    todos[div.id] = value; //
-    if (value != "") {
+    todos[div.id] = value; // Modify data
+
+    let todosLower = todos.map(element => element.toLowerCase());
+    if(todosLower.includes(value.toLowerCase()) === true){
+      alert(`${value} already on your list!`)
+    } else
+    if (value != "" && todosLower.includes(value.toLowerCase()) === false ) {
       todoMode(); // Back to To Do List Mode
       div.children[1].textContent = value; // Change List Value
     } else {
