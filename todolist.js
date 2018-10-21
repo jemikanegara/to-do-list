@@ -28,12 +28,13 @@ function readListing() {
 
     let deleteButton = document.createElement("button");
     deleteButton.setAttribute("type", "button");
-    deleteButton.setAttribute("class", "btn btn-danger col-1");
-    deleteButton.setAttribute("id", "delete");
+    deleteButton.setAttribute("class", "btn btn-danger col-1 delete");
+    
     deleteButton.textContent = `X`;
 
     let div = document.createElement("div");
     div.setAttribute("class", "row mb-3 list");
+    div.setAttribute("id", i);
 
     div.appendChild(editButton);
     div.appendChild(li);
@@ -50,37 +51,59 @@ readListing();
 
 // Create
 function addListing() {
-  todoList.innerHTML = "";
-  todos.push(addInput.value);
-  readListing();
+  for(i = 0; i < todos.length; i++){
+    if(todos[i].toLowerCase() != addInput.value.toLowerCase()){
+      todoList.innerHTML = "";
+      todos.push(addInput.value);
+      readListing();
+    } else {
+      alert(`${addInput.value} already on your list!`)
+      return
+    }
+  }
 }
 
 // Update
 function editListing() {
+
+  // Change list to edit mode
   let div = this.parentNode;
-  div.innerHTML = "";
+  let value = div.children[1].textContent;
+  div.innerHTML = 
+  `
+  <button type="button" class="btn btn-dark col-xl-1 col-lg-1 col-md-1 col-2 editSave">Save</button>
+  <input class="list-group-item col-9 editInput" placeholder="${value}">
+  <button type="button" class="btn btn-warning col-1 editCancel">X</button>
+  `;
+
+  // Add Event Listener to Save & Cancel
+  div.children[0].addEventListener('click', editSaving) 
+  div.children[2].addEventListener('click', todoMode)
+
+  // Cancel Edit and Back to To Do List Mode
+  function todoMode () {
+    div.innerHTML = 
+    `
+    <button type="button" class="btn btn-info col-lg-1 col-md-1 col-2 edit">Edit</button>
+    <li class="list-group-item col-9">${value}</li>
+    <button type="button" class="btn btn-danger col-1 delete">X</button>
+    `
+    div.children[0].addEventListener('click', editListing)
+    div.children[2].addEventListener('click', deleteListing)
+  }
+
+  function editSaving() {
+    let input = div.children[1]
+    let value = input.value // Get input value
+    todos[div.id] = value //
+    if(value != "") {
+      todoMode() // Back to To Do List Mode
+      div.children[1].textContent= value // Change List Value
+    } else {
+      alert('input field cannot be empty')
+    }
+  }
 }
-
-// Edit Variable
-// editCancel = document.getElementById("editCancel");
-// editInput = document.getElementById("editInput");
-// editSave = document.getElementById("editSave");
-// // Edit Event Listener
-// editCancel.addEventListener("click", editCanceling);
-// editSave.addEventListener("click", editSaving);
-// function editCanceling() {
-//   console.log("edit canceling success");
-// }
-
-// function editSaving() {
-//   console.log("edit saving succes");
-// }
-
-// `<div class="row mb-3 list">
-//  <button type="button" class="btn btn-dark col-xl-1 col-lg-1 col-md-1 col-2" id="editSave">Save</button>
-// <input class="list-group-item col-9" placeholder="Sleep" id="editInput">
-// <button type="button" class="btn btn-warning col-1" id="editCancel">X</button>
-// </div>`
 
 // Delete
 function deleteListing() {
@@ -89,10 +112,12 @@ function deleteListing() {
 
   for (i = 0; i < todos.length; i++) {
     if (li.textContent === todos[i]) {
-      todos.splice(i, 1);
+      if (confirm("Are you sure want to delete this list?")) {
+        todos.splice(i, 1);
+        div.remove();
+      }
     }
   }
-  div.remove();
 }
 
 // Search
