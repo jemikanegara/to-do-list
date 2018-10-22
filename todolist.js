@@ -50,8 +50,11 @@ readListing();
 // Create & Anti Duplicate
 function addListing() {
   let todosLower = todos.map(element => element.toLowerCase());
-  if (todosLower.includes(addInput.value.toLowerCase())) {
+  if (todosLower.includes(addInput.value.toLowerCase()) === true) {
     alert(`${addInput.value} already on your list!`);
+  } else 
+  if (addInput.value === "") {
+    alert(`input field cannot be empty`)
   } else {
     todos.push(addInput.value);
     todoList.innerHTML = "";
