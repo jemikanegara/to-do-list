@@ -58,6 +58,7 @@ function addListing() {
   } else {
     todos.push(addInput.value);
     todoList.innerHTML = "";
+    addInput.value = '';
     readListing();
   }
 }
