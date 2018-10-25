@@ -1,5 +1,4 @@
 // To Do List
-let todos = ["Eat", "Work", "Sleep"];
 search = document.getElementById("search");
 addInput = document.getElementById("addInput");
 addButton = document.getElementById("addButton");
