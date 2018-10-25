@@ -5,10 +5,17 @@ addInput = document.getElementById("addInput");
 addButton = document.getElementById("addButton");
 todoList = document.getElementById("todoList");
 
+// Local Storage
+let todos = JSON.parse(localStorage.todos || '[]') 
+window.onbeforeunload = function() {
+  localStorage.todos = JSON.stringify(todos)
+};
+
 // Event Listener
 search.addEventListener("keyup", searchListing);
 addButton.addEventListener("click", addListing);
 addInput.addEventListener("enter", addListing);
+
 // Read
 function readListing() {
   for (i = 0; i < todos.length; i++) {
